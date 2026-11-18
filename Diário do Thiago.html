@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diário do Thiago</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef0fb;--page:#fffdf7;--ink:#26244a;--muted:#625f8a;--line:#c9cdee;--accent:#5b5bd6;--r1:#ef6a6a;--r2:#f5a94a;--r3:#f2d54b;--r4:#58c27d;--r5:#4f9de8;--r6:#9a6bdc;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15142b;--page:#201f3d;--ink:#f1f0ff;--muted:#b4b2dc;--line:#3a3866;--accent:#8f8fff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15142b;--page:#201f3d;--ink:#f1f0ff;--muted:#b4b2dc;--line:#3a3866;--accent:#8f8fff;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Figtree,system-ui,sans-serif;line-height:1.65;font-size:17px}
+main{max-width:640px;margin:0 auto;padding:30px 20px 56px}
+.thread{height:12px;border-radius:6px;background:linear-gradient(90deg,var(--r1),var(--r2),var(--r3),var(--r4),var(--r5),var(--r6));margin-bottom:26px}
+h1{font-weight:800;font-size:clamp(2.4rem,10vw,3.6rem);line-height:1.1;margin:0 0 10px}
+h2{font-weight:800;font-size:1.5rem;margin:48px 0 14px;display:inline-block;padding-bottom:6px;border-bottom:5px solid;border-image:linear-gradient(90deg,var(--r1),var(--r2),var(--r3),var(--r4),var(--r5),var(--r6)) 1}
+.sub{color:var(--muted);font-size:1.1rem;max-width:32em}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.chips span{border:3px solid var(--line);background:var(--page);border-radius:999px;padding:4px 14px;font-weight:700}.chips span:nth-child(1){border-color:var(--r2)}.chips span:nth-child(2){border-color:#d60270;border-right-color:#9b4f96;border-bottom-color:#0038a8}.chips span:nth-child(3){border-image:none;border-color:var(--r6)}
+.diary{background:var(--page);border:2px solid var(--line);border-radius:6px 20px 20px 6px;border-left:12px solid var(--r5);padding:22px 22px 18px;margin-top:32px;box-shadow:0 2px 0 var(--line)}
+.date{color:var(--muted);font-weight:600;font-size:.95rem;margin-bottom:6px}
+.entry-title{font-size:1.4rem;font-weight:800;line-height:1.25;margin:0 0 10px}
+.entry p{margin:0 0 10px}
+.ctrl{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;border-top:2px dashed var(--line);padding-top:14px}
+.count{color:var(--muted);font-weight:600}
+button{font:inherit;font-weight:700;cursor:pointer;background:var(--accent);color:#fff;border:0;border-radius:999px;padding:10px 20px}
+button[disabled]{opacity:.4;cursor:default}
+button:focus-visible{outline:3px solid var(--r5);outline-offset:3px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button{color:#15142b}}
+.hug{background:var(--page);border:2px solid var(--line);border-radius:16px;padding:22px;text-align:center}.hugcount{margin:14px 0 4px;color:var(--muted)}.hugcount b{display:block;font-size:2.4rem;color:var(--accent);line-height:1.1}.hug p{font-weight:600;min-height:3.2em;margin:8px 0 0}
+.notes{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.notes li{background:var(--page);border:2px solid var(--line);border-radius:16px;padding:14px 16px}
+.notes b{display:block;margin-bottom:2px}
+.help{background:var(--page);border:2px solid var(--line);border-radius:16px;padding:18px}
+footer{margin-top:48px;color:var(--muted);font-size:.9rem;border-top:2px solid var(--line);padding-top:14px}
+@media (prefers-reduced-motion:no-preference){.entry{animation:flip .35s ease both}@keyframes flip{from{opacity:0;transform:translateX(12px)}}}
+</style>
+</head>
+<body>
+<main>
+<div class="thread" aria-hidden="true"></div>
+<h1>Diário do Thiago</h1>
+<p class="sub">Thiago tem 15 anos, é bissexual e faz parte da comunidade LGBTQIA+. Neste diário ele escreve sobre se descobrir, se aceitar e aprender a ter orgulho de quem é. Ficção.</p>
+<div class="chips"><span>15 anos</span><span>Bissexual</span><span>LGBTQIA+</span></div>
+
+<section class="diary" aria-labelledby="et">
+  <div class="entry" id="entry" aria-live="polite">
+    <div class="date" id="ed"></div>
+    <h3 class="entry-title" id="et"></h3>
+    <div id="eb"></div>
+  </div>
+  <div class="ctrl">
+    <button id="prev" type="button">Anterior</button>
+    <span class="count" id="cnt"></span>
+    <button id="next" type="button">Próxima</button>
+  </div>
+</section>
+
+<h2>Mande apoio pro Thiago</h2>
+<section class="hug">
+  <button id="hug" type="button">Mandar um abraço</button>
+  <div class="hugcount"><b id="hc">0</b>abraços enviados</div>
+  <p id="hm" aria-live="polite">Toque no botão para mandar uma mensagem de apoio.</p>
+</section>
+
+<h2>O que o Thiago aprendeu até agora</h2>
+<ul class="notes">
+  <li><b>Não existe prazo.</b>Ninguém precisa ter tudo resolvido aos 15 anos. Descobrir é um processo, e pode levar o tempo que for.</li>
+  <li><b>Ser LGBT é natural.</b>Ser bissexual, gay, lésbica, trans ou de qualquer outra identidade da sigla não é doença nem erro. É parte de quem a pessoa é.</li>
+  <li><b>Contar é decisão dele.</b>Cada pessoa escolhe quando, como e para quem contar. Ninguém tem o direito de contar por ele.</li>
+  <li><b>Ter com quem conversar muda tudo.</b>Um amigo de confiança, um professor, alguém da família: uma pessoa já faz diferença.</li>
+</ul>
+
+<h2>Se você se identifica com o Thiago</h2>
+<div class="help">
+  <p>Você não está sozinho e não tem nada de errado com você. Se estiver pesado demais, converse com alguém de confiança. No Brasil, o CVV atende gratuitamente pelo telefone 188, a qualquer hora, para quem precisa de apoio emocional.</p>
+</div>
+
+<div class="thread" aria-hidden="true"></div>
+<footer>Obra de ficção. O personagem e os acontecimentos são inventados e não representam nenhuma pessoa real.</footer>
+</main>
+<script>
+(function(){
+  var pages=[
+    {d:'Segunda-feira',t:'Eu sou bissexual',b:['Escrevi essa frase no caderno e fiquei olhando para ela um tempão: eu sou bissexual. Isso quer dizer que posso gostar de meninos e de meninas.','Não é ruim e não é confusão. É só quem eu sou. Fazia tempo que eu queria escrever isso com todas as letras.']},
+    {d:'Quarta-feira',t:'LGBTQIA+ também é a minha comunidade',b:['Fui pesquisar e descobri que a sigla LGBTQIA+ reúne muita gente diferente: lésbicas, gays, bissexuais, pessoas trans e outras identidades.','Entender que existe uma comunidade inteira me fez sentir menos sozinho. Eu faço parte dela.']},
+    {d:'Sexta-feira',t:'Contei para a Joana',b:['A Joana é minha melhor amiga desde o sexto ano. Contei para ela que sou bissexual e que sou LGBT.','Ela só disse: “Obrigada por confiar em mim. Eu te amo do mesmo jeito.” Respirei fundo pela primeira vez na semana.']},
+    {d:'Sábado',t:'Orgulho de ser quem eu sou',b:['Hoje prendi uma estrelinha com as cores da bandeira bissexual na mochila. Foi pequeno, mas me deu um orgulho enorme.','Ser LGBT não é defeito, nem fase, nem motivo de vergonha. Eu aprendi a falar isso para mim mesmo.']},
+    {d:'Domingo',t:'No meu tempo',b:['Hoje almocei com a minha família. Ainda não contei para eles, e tudo bem: contar é decisão minha, no meu tempo.','Enquanto isso, sou o Thiago, bissexual, LGBT e orgulhoso, que gosta de música, de desenhar e de pão de queijo.']}
+  ];
+  var i=0,ed=document.getElementById('ed'),et=document.getElementById('et'),eb=document.getElementById('eb'),cnt=document.getElementById('cnt'),pv=document.getElementById('prev'),nx=document.getElementById('next'),en=document.getElementById('entry');
+  function show(){
+    var p=pages[i];
+    ed.textContent=p.d;et.textContent=p.t;eb.innerHTML='';
+    p.b.forEach(function(x){var e=document.createElement('p');e.textContent=x;eb.appendChild(e)});
+    cnt.textContent=(i+1)+' de '+pages.length;
+    pv.disabled=i===0;nx.disabled=i===pages.length-1;
+    en.style.animation='none';void en.offsetWidth;en.style.animation='';
+  }
+  pv.addEventListener('click',function(){if(i>0){i--;show()}});
+  nx.addEventListener('click',function(){if(i<pages.length-1){i++;show()}});
+  show();
+  var hugs=0,hc=document.getElementById('hc'),hm=document.getElementById('hm');
+  var msgs=['Você é incrível do jeito que é.','O seu tempo é o tempo certo.','Ser bissexual faz parte de quem você é, e isso é lindo.','Você não está sozinho.','Orgulho de você, Thiago!','A Joana mandou um abraço apertado.','Você merece respeito e carinho sempre.'];
+  document.getElementById('hug').addEventListener('click',function(){
+    hugs++;hc.textContent=hugs;hm.textContent=msgs[(hugs-1)%msgs.length];
+  });
+})();
+</script>
+</body>
+</html>
